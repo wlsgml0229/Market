@@ -32,6 +32,7 @@ export const authOptions: NextAuthOptions = {
           name: 'J Smith',
           email: 'jsmith@example.com',
           password: 'aaa',
+          role: 'Admin',
         }
 
         if (user) {
@@ -49,6 +50,10 @@ export const authOptions: NextAuthOptions = {
   //sign in 할때 세션 저장
   session: {
     strategy: 'jwt',
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    maxAge: 30 * 24 * 60 * 60, // 1month
   },
   callbacks: {
     async jwt({ token, user }) {

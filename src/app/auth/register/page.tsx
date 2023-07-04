@@ -6,9 +6,8 @@ import Button from '@/components/Buttom'
 import Link from 'next/link'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { signIn } from 'next-auth/react'
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const {
@@ -17,6 +16,7 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
@@ -25,9 +25,9 @@ const LoginPage = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     setIsLoading(true)
     try {
-      // next auth에서 제공하는 signIn 메소드를 사용
-      const data = signIn('credentials', body)
+      const { data } = await axios.post('/api/register', body)
       console.log(data)
+      await router.push('/auth/login')
     } catch (error) {
       console.log(error)
     } finally {
@@ -40,7 +40,7 @@ const LoginPage = () => {
         className="flex flex-col justify-center gap-4 min-w-[350px]"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h1 className="text-2xl">Login</h1>
+        <h1 className="text-2xl">Register</h1>
         <Input
           id="email"
           label="email"
@@ -48,7 +48,13 @@ const LoginPage = () => {
           register={register}
           errors={errors}
         />
-
+        <Input
+          id="name"
+          label="name"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+        />
         <Input
           id="password"
           label="password"
@@ -60,9 +66,9 @@ const LoginPage = () => {
         <Button label="Regsiter" />
         <div>
           <p className="text-gray-400 text-center">
-            Not a member?{' '}
-            <Link href="/auth/register" className="text-black hover:underline">
-              Register
+            Already a member?{' '}
+            <Link href="/auth/login" className="text-black hover:underline">
+              Login
             </Link>
           </p>
         </div>
@@ -71,4 +77,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default RegisterPage

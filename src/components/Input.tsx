@@ -6,7 +6,7 @@ interface InputProps {
   id: string
   label: string
   type?: string
-  disable?: boolean
+  disabled?: boolean
   formatPrice?: boolean
   required?: boolean
   register: UseFormRegister<FieldValues>
@@ -17,7 +17,7 @@ const Input: React.FC<InputProps> = ({
   id,
   label,
   type = 'text',
-  disable,
+  disabled,
   formatPrice,
   register,
   required,
@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = ({
       )}
       <input
         id={id}
-        disabled={disable}
+        disabled={disabled}
         {...register(id, { required })}
         placeholder=""
         type={type}
@@ -39,6 +39,7 @@ const Input: React.FC<InputProps> = ({
            p-4
            pt-6
            font-light
+           border-2
            bg-white
            rounded-md
            outline-none
@@ -57,7 +58,7 @@ const Input: React.FC<InputProps> = ({
         peer-placeholder-shown:translate-y-0
         peer-focus:scale-75
         peer-focus:-translate-y-4
-        ${errors[id] ? 'text-rose-500' : 'text-zink-400'}
+        ${errors[id] ? 'text-rose-500' : 'text-zinc-400'}
         `}
       >
         {label}

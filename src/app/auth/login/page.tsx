@@ -44,6 +44,7 @@ const LoginPage = () => {
         <Input
           id="email"
           label="email"
+          type="email"
           disabled={isLoading}
           register={register}
           errors={errors}
@@ -57,7 +58,7 @@ const LoginPage = () => {
           register={register}
           errors={errors}
         />
-        <Button label="Regsiter" />
+        <Button label="SignIn" />
         <div>
           <p className="text-gray-400 text-center">
             Not a member?{' '}

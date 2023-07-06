@@ -1,12 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
 //next js 제공 함수 사용
-import { signIn, signOut, useSession } from 'next-auth/react'
-
+import { signIn, signOut } from 'next-auth/react'
+import { User } from '@prisma/client'
+interface NavItemProps {
+  mobile?: boolean
+  currentUser?: User | null
+}
 // ?: 옵셔널 사용
-const NavItem = ({ mobile }: { mobile?: boolean }) => {
-  const { data: session, status } = useSession()
-  console.log({ session }, status)
+const NavItem = ({ mobile, currentUser }: NavItemProps) => {
+  //session provider 제거
 
   return (
     <ul
@@ -20,7 +23,7 @@ const NavItem = ({ mobile }: { mobile?: boolean }) => {
       <li className="py-2 text-center border-b-4 cursor-pointer">
         <Link href="/user">User</Link>
       </li>
-      {session?.user ? (
+      {currentUser ? (
         <li className="py-2 text-center border-b-4 cursor-pointer">
           <button onClick={() => signOut()}>Signout</button>
         </li>

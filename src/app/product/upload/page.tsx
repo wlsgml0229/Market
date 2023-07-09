@@ -5,6 +5,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import Button from '@/components/Buttom'
 import Container from '@/components/Container'
 import Heading from '@/components/Heading'
+import ImageUpload from '@/components/ImageUpload'
 
 const ProductUploadPage = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -26,6 +27,11 @@ const ProductUploadPage = () => {
       price: 1,
     },
   })
+  const imageSrc = watch('imageSrc')
+  const setCustomValue = (id: string, value: any) => {
+    //react hook form
+    setValue(id, value)
+  }
   //data 인자에 input values 담김
   const onSubmit: SubmitHandler<FieldValues> = (data) => {}
   return (
@@ -33,6 +39,10 @@ const ProductUploadPage = () => {
       <div className="max-w-screen-lg mx-auto">
         <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
           <Heading title="Product Upload" subtitle="upload your product" />
+          <ImageUpload
+            onChange={(value) => setCustomValue('imageSrc', value)}
+            value={imageSrc}
+          />
           <Input
             id="title"
             label="Title"

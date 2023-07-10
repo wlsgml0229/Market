@@ -6,6 +6,8 @@ import Button from '@/components/Buttom'
 import Container from '@/components/Container'
 import Heading from '@/components/Heading'
 import ImageUpload from '@/components/ImageUpload'
+import { categories } from '@/components/categories/Categories'
+import CategoryInput from '@/components/categories/CategoryInput'
 
 const ProductUploadPage = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -28,6 +30,7 @@ const ProductUploadPage = () => {
     },
   })
   const imageSrc = watch('imageSrc')
+  const category = watch('category')
   const setCustomValue = (id: string, value: any) => {
     //react hook form
     setValue(id, value)
@@ -71,7 +74,19 @@ const ProductUploadPage = () => {
             required
           />
           <hr />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h[50vh] overflow-y-auto"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h[50vh] overflow-y-auto">
+            {categories.map((item) => (
+              <div key={item.label} className="col-span-1">
+                <CategoryInput
+                  onClick={() => setCustomValue('category', category)}
+                  selected={category === item.path}
+                  label={item.label}
+                  icon={item.icon}
+                  path={item.path}
+                />
+              </div>
+            ))}
+          </div>
           <hr />
           <Button label="상품 생성 하기" />
         </form>

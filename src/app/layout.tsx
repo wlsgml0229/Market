@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import getCurrentUser from '@/app/actions/getCurrentUser'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,6 +22,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_APPKEY}&autoload=false`}
+          strategy="beforeInteractive"
+        />
         <Navbar currentUser={currentUser} />
         {children}
       </body>

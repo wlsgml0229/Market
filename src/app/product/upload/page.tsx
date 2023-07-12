@@ -8,6 +8,8 @@ import Heading from '@/components/Heading'
 import ImageUpload from '@/components/ImageUpload'
 import { categories } from '@/components/categories/Categories'
 import CategoryInput from '@/components/categories/CategoryInput'
+import KakaoMap from '@/components/KakaoMap'
+import dynamic from 'next/dynamic'
 
 const ProductUploadPage = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -31,6 +33,12 @@ const ProductUploadPage = () => {
   })
   const imageSrc = watch('imageSrc')
   const category = watch('category')
+  const latitude = watch('latitude')
+  const longitude = watch('longitude')
+
+  const kakaoMap = dynamic(() => import('../../../components/KakaoMap'), {
+    ssr: false,
+  })
   const setCustomValue = (id: string, value: any) => {
     //react hook form
     setValue(id, value)
@@ -88,6 +96,11 @@ const ProductUploadPage = () => {
             ))}
           </div>
           <hr />
+          <KakaoMap
+            setCustomValue={setCustomValue}
+            latitude={latitude}
+            longitude={longitude}
+          />
           <Button label="상품 생성 하기" />
         </form>
       </div>

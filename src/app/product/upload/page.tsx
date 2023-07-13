@@ -10,8 +10,11 @@ import { categories } from '@/components/categories/Categories'
 import CategoryInput from '@/components/categories/CategoryInput'
 import KakaoMap from '@/components/KakaoMap'
 import dynamic from 'next/dynamic'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const ProductUploadPage = () => {
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const {
     register,
@@ -44,7 +47,20 @@ const ProductUploadPage = () => {
     setValue(id, value)
   }
   //data 인자에 input values 담김
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {}
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    setIsLoading(true)
+    axios
+      .post('/api/products', data)
+      .then((res) => {
+        router.push(`/product/${res.data.id}`)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
   return (
     <Container>
       <div className="max-w-screen-lg mx-auto">
